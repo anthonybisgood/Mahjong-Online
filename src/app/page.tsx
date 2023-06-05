@@ -1,73 +1,56 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-import "firebase/compat/auth";
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyALgSBNIXYBg3K7Hsi503LiYSC2STEVe4U",
-  authDomain: "mahjong-online-9bc7f.firebaseapp.com",
-  projectId: "mahjong-online-9bc7f",
-  storageBucket: "mahjong-online-9bc7f.appspot.com",
-  messagingSenderId: "423406873005",
-  appId: "1:423406873005:web:43a0a8b022b5e04e6f9924",
-  measurementId: "G-ME71JFE13R",
-};
-firebase.initializeApp(firebaseConfig);
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-if (typeof window !== "undefined" && !firebase.apps.length) {
-  const analytics = getAnalytics(app);
-}
-
-const auth = firebase.auth();
-const firestore = firebase.firestore();
-export { auth, firestore };
-
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
-  return <button onClick={signInWithGoogle}>Sign in with Google</button>;
-}
-
-function SignOut() {
-  return (
-    auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
-  );
-}
+import { SignInButton } from "../app/Components/SignInButton";
+import { Header } from "../app/Components/Header";
 
 export default function Home() {
-  const [user] = useAuthState(auth as any);
   return (
     <>
-      <header className="">
-        <section className="flex justify-end m-2">
-          <Link className="p-2" href="">
-            Rules
-          </Link>
-          <div className="border rounded-full p-2 hover:text-cyan-500 hover:border-cyan-500">
-            {user ? <SignOut /> : <SignIn />}
-          </div>
+      <Header />
+      <main className="flex flex-col items-center">
+        <h1 className="text-3xl my-10">Welcome to Mahjong Online</h1>
+        <Link
+          href="newGame"
+          className="border rounded-full hover:text-cyan-500 hover:border-cyan-500 p-2 mt-2"
+        >
+          New Game
+        </Link>
+
+        <section className="mt-8 items-start px-[20%]">
+          <p>
+            &emsp;&emsp;Mahjong is a captivating and timeless game that
+            originated in China and has gained popularity worldwide. Played with
+            a set of beautifully crafted tiles, the game requires a combination
+            of skill, strategy, and a touch of luck. The objective of Mahjong is
+            to build sets and pairs of tiles, using a mixture of memory,
+            calculation, and observation skills. Players carefully study the
+            arrangement of tiles on the table, strategically drawing and
+            discarding them to complete various combinations, such as sequences,
+            triplets, and unique sets. The game&apos;s complexity lies in the
+            countless tile combinations and the intricacies of different scoring
+            systems, which vary depending on the regional variations of Mahjong
+            being played. Whether engaging in a leisurely match with friends or
+            participating in intense competitive tournaments, Mahjong offers a
+            deeply immersive experience that challenges the mind and provides
+            endless hours of enjoyment.
+          </p>
+          <p className="mt-4">
+            &emsp;&emsp;Beyond its gameplay mechanics, Mahjong also holds
+            cultural significance, serving as a window into Chinese traditions
+            and aesthetics. The tiles are adorned with elegant designs,
+            featuring intricate symbols and characters that reflect the
+            game&apos;s rich heritage. Mahjong gatherings often bring people
+            together, fostering social interaction, and creating a sense of
+            camaraderie among players. It is a game that transcends language
+            barriers and connects people across cultures, with its popularity
+            spreading to different corners of the globe. With its blend of
+            strategy, cultural immersion, and social engagement, Mahjong
+            continues to captivate players of all ages and backgrounds, ensuring
+            its legacy as a beloved classic for generations to come.
+          </p>
         </section>
-      </header>
-      <main>
-        <h1 className="flex justify-center text-xl">
-          Welcome to Mahjong Online!
-        </h1>
       </main>
     </>
   );
