@@ -1,10 +1,8 @@
-"use client";
 import Link from "next/link";
 import React from "react";
 
-import { SignInButton } from "../app/Components/SignInButton";
 import { Header } from "../app/Components/Header";
-
+import { RoomForm } from "../app/Components/RoomForm";
 export default function Home() {
   return (
     <>
@@ -17,8 +15,8 @@ export default function Home() {
         >
           New Game
         </Link>
-
-        <section className="mt-8 items-start px-[20%]">
+        <RoomForm />
+        <section className="mt-8 items-start px-[15%]">
           <p>
             &emsp;&emsp;Mahjong is a captivating and timeless game that
             originated in China and has gained popularity worldwide. Played with
