@@ -30,13 +30,13 @@ if (typeof window !== "undefined" && !firebase.apps.length) {
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-export { auth, firestore };
+
+const signInWithGoogle = () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider);
+};
 
 function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
   return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 
@@ -51,4 +51,4 @@ export default function SignInButton() {
   return <>{user ? <SignOut /> : <SignIn />}</>;
 }
 
-export { SignInButton };
+export {signInWithGoogle, auth, firestore};

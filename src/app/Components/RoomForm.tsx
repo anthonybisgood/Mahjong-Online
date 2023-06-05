@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-
+import { auth, firestore, signInWithGoogle } from "../Components/SignInButton";
+import { useRouter } from "next/router";
 const FormComponent = () => {
   const [roomNumber, setRoomNumber] = useState("");
 
@@ -9,22 +10,40 @@ const FormComponent = () => {
     setRoomNumber(event.target.value);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!auth.currentUser) {
+      alert("You must be signed in to join a game.")
+    }
+    
     // Do something with the room number
   };
+  
 
   return (
-    <form className="bg-white shadow-md rounded" onSubmit={onSubmit}>
-      <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    <div className="flex">
+      <form
+        className="bg-white shadow-md rounded"
+        onSubmit={onSubmit}
         id="RoomNumber"
-        type="text"
-        placeholder="Room Number"
-        value={roomNumber}
-        onChange={onChange}
-      ></input>
-    </form>
+      >
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          placeholder="Room Number"
+          value={roomNumber}
+          onChange={onChange}
+        ></input>
+      </form>
+      <button
+        type="submit"
+        form="RoomNumber"
+        value="Submit"
+        className="border ml-2 rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+      >
+        Submit
+      </button>
+    </div>
   );
 };
 

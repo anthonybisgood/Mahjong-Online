@@ -3,6 +3,7 @@ import React from "react";
 
 import { Header } from "../app/Components/Header";
 import { RoomForm } from "../app/Components/RoomForm";
+import { auth, firestore } from "./Components/SignInButton";
 export default function Home() {
   return (
     <>
@@ -10,7 +11,7 @@ export default function Home() {
       <main className="flex flex-col items-center">
         <h1 className="text-3xl my-10">Welcome to Mahjong Online</h1>
         <Link
-          href="newGame"
+          href="/gameLobby"
           className="border rounded-full hover:text-cyan-500 hover:border-cyan-500 p-2 mt-2"
         >
           New Game
