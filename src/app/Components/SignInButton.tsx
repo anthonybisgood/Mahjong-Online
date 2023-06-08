@@ -31,7 +31,7 @@ if (typeof window !== "undefined" && !firebase.apps.length) {
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-const signInWithGoogle = () => {
+const signInWithGoogle = async () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider);
 };
@@ -40,7 +40,7 @@ function SignIn() {
   return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 
-function SignOut() {
+const SignOut = async () => {
   return (
     auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
   );
