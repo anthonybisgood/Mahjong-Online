@@ -1,34 +1,25 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { Header } from "../Components/Header";
 import { auth, firestore } from "../Components/SignInButton";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { useRouter } from "next/navigation";
+function createRoom(props: any) {}
 
-function createRoom(props: any) {
-  
+async function checkAuth(router: any) {
+  const user = auth.currentUser;
+  if (user) {
+  } else {
+    router.push("/");
+  }
 }
 
 export default function GameLobby(props: any) {
   const router = useRouter();
-  if (!auth.currentUser) {
-    router.push("/");
-    alert("You must be signed in to join a game.");
-  } else {
-    router.push("/gameLobby");
-  }
+  checkAuth(router);
   createRoom(props);
-
-  // join game
-  if (props) {
-    console.log(props);
-  }
-  console.log(props);
   const [user] = useAuthState(auth as any);
-  console.log(user);
   const db = firestore;
-
-  console.log(db);
   return (
     <>
       <Header />
@@ -39,4 +30,4 @@ export default function GameLobby(props: any) {
   );
 }
 
-export {GameLobby};
+export { GameLobby };

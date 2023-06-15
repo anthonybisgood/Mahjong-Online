@@ -2,8 +2,6 @@
 import React from "react";
 import { useState } from "react";
 import { auth, firestore, signInWithGoogle } from "../Components/SignInButton";
-import { GameLobby } from "../gameLobby/page";
-import { useRouter } from "next/router";
 
 const joinRoom = (roomNumber: any) => {};
 
@@ -15,13 +13,11 @@ const FormComponent = () => {
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     if (!auth.currentUser) {
       alert("You must be signed in to join a game.");
     } else {
       // JoinRoom(roomNumber);
     }
-
     // Do something with the room number
   };
 

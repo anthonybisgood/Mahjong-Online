@@ -2,12 +2,10 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -31,24 +29,31 @@ if (typeof window !== "undefined" && !firebase.apps.length) {
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-const signInWithGoogle = async () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
+const signInWithGoogle = () => {
+  auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 };
 
 function SignIn() {
   return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 
-const SignOut = async () => {
+const SignOut = () => {
   return (
-    auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
+    auth.currentUser && (
+      <button
+        onClick={() => {
+          auth.signOut();
+        }}
+      >
+        Sign Out
+      </button>
+    )
   );
-}
+};
 
 export default function SignInButton() {
   const [user] = useAuthState(auth as any);
   return <>{user ? <SignOut /> : <SignIn />}</>;
 }
 
-export {signInWithGoogle, auth, firestore};
+export { signInWithGoogle, auth, firestore };

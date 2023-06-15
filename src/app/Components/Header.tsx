@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SignInButton from "./SignInButton";
+
 export default function Header() {
   return (
     <>
@@ -26,4 +27,4 @@ export default function Header() {
   );
 }
 
-export { Header };
+export {Header};

@@ -1,21 +1,39 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 
 import { Header } from "../app/Components/Header";
 import { RoomForm } from "../app/Components/RoomForm";
-import { auth, firestore } from "./Components/SignInButton";
+import { auth } from "../app/Components/SignInButton";
+
+function NewGameButton() {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!auth.currentUser) {
+      alert("You must be signed in to create a game.");
+      e.preventDefault();
+      return;
+    }
+  };
+  return (
+    <>
+      <Link
+        onClick= {(e) => {handleClick(e)}}
+        href="/gameLobby"
+        className="border rounded-full hover:text-cyan-500 hover:border-cyan-500 p-2 mt-2"
+      >
+        New Game
+      </Link>
+    </>
+  );
+}
+
 export default function Home() {
   return (
     <>
       <Header />
       <main className="flex flex-col items-center">
         <h1 className="text-3xl my-10">Welcome to Mahjong Online</h1>
-        <Link
-          href="/gameLobby"
-          className="border rounded-full hover:text-cyan-500 hover:border-cyan-500 p-2 mt-2"
-        >
-          New Game
-        </Link>
+        <NewGameButton />
         <RoomForm />
         <section className="mt-8 items-start px-[15%]">
           <p>
