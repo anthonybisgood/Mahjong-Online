@@ -19,7 +19,7 @@ export default function GameLobby(props: any) {
   checkAuth(router);
   createRoom(props);
   const [user] = useAuthState(auth as any);
-  const db = firestore;
+  
   return (
     <>
       <Header />

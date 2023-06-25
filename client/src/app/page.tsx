@@ -6,6 +6,9 @@ import { Header } from "../app/Components/Header";
 import { RoomForm } from "../app/Components/RoomForm";
 import { auth } from "../app/Components/SignInButton";
 
+
+
+
 function NewGameButton() {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!auth.currentUser) {
@@ -13,18 +16,20 @@ function NewGameButton() {
       e.preventDefault();
       return;
     }
+    
   };
   return (
     <>
       <Link
         onClick= {(e) => {handleClick(e)}}
-        href="/gameLobby"
+        href="/lobby"
         className="border rounded-full hover:text-cyan-500 hover:border-cyan-500 p-2 mt-2"
       >
         New Game
       </Link>
     </>
   );
+  
 }
 
 export default function Home() {
