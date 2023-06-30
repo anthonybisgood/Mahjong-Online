@@ -3,23 +3,30 @@ import { useRouter } from "next/navigation";
 import { Header } from "../Components/Header";
 import { auth, firestore } from "../Components/SignInButton";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import { useEffect } from "react";
+import firebase from "firebase/compat/app";
 
 function createRoom(props: any) {}
 
-async function checkAuth(router: any) {
-  const user = auth.currentUser;
-  if (user) {
-  } else {
-    router.push("/");
-  }
-}
 
 export default function GameLobby(props: any) {
   const router = useRouter();
-  checkAuth(router);
-  createRoom(props);
   const [user] = useAuthState(auth as any);
-  
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      router.push("/");
+    }
+  });
+ 
+  // useEffect(() => {
+  //   checkAuth(router);
+  //   if (!auth.currentUser) {
+
+  //     router.push("/");
+  //   }
+  // });
+
   return (
     <>
       <Header />

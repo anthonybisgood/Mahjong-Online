@@ -1,35 +1,52 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 import { Header } from "../app/Components/Header";
 import { RoomForm } from "../app/Components/RoomForm";
-import { auth } from "../app/Components/SignInButton";
+import { auth, firestore } from "../app/Components/SignInButton";
+import { randomCode } from "../app/Hooks/generateCode";
 
 
-
+async function createGameRoom() {
+  let code = ""
+  await randomCode().then((result) => { code = result });
+  const lobbyRef = firestore.collection("gameLobby");
+  const createLobby = async () => {
+    const lobby = await lobbyRef.add({
+      players: [],
+      games: [],
+      code: code,
+    });
+    return lobby.id;
+  }
+  const lobbyId = createLobby();
+  return lobbyId;
+}
 
 function NewGameButton() {
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  var [href, setHref] = useState({});
+  const handleClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!auth.currentUser) {
       alert("You must be signed in to create a game.");
       e.preventDefault();
       return;
     }
-    
+    const newLobbyId = await createGameRoom();
+    setHref(`/lobby?lobbyID=${newLobbyId}`);
   };
   return (
     <>
       <Link
         onClick= {(e) => {handleClick(e)}}
-        href="/lobby"
+        href= {href}
         className="border rounded-full hover:text-cyan-500 hover:border-cyan-500 p-2 mt-2"
+        id="new-game-button"
       >
         New Game
       </Link>
     </>
   );
-  
 }
 
 export default function Home() {
